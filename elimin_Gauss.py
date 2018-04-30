@@ -1,5 +1,9 @@
 #!/usr/bin/python3.5
 #coding: utf-8
+
+#EXEMPLO PARA EXECUTAR O ARQUIVO -- ./elimin_Gauss.py 1 entrada4.txt
+#1 - Significa que ele pega do arquivo
+#2 - Recebe por meio de INPUTS
 import sys
 
 class CorDeFundo(object):
@@ -31,14 +35,17 @@ class Matriz(object):
         self.matriz = Matriz
 
     def Cria(self,linEcol):
+        #CRIA UM ARRAY SIMPLES PREENCHIDO DE ZEROS
         Matriz = [0] * linEcol
-
+        #CRIA AS LINHAS DA MATRIZ E PREENCHE COM ZERO
         for i in range(linEcol):
+            #SOMA-SE COM MAIS UM PARA QUE A COLUNA DE SOLUÇÕES SEJA CONTEMPLADA
             Matriz[i] = [0]*(linEcol+1)
-
+        #RETORNA A MATRIZ
         return Matriz
 
     def Exibe(self, Matriz, linEcol):
+        # end="" SINALIZA PARA O PRINT QUE ELE NÃO DEVE QUEBRAR A LINHA
         for i in range (linEcol):
             print(CorDaLetra.vermelho,"| ",end="")
             for j in range (linEcol+1):
@@ -49,15 +56,24 @@ class Matriz(object):
                     print (" |",CorDaLetra.original)
 
     def Preenche(self, Matriz, linEcol):
+    #FUNÇÃO QUE PREENCHE MANUALMENTE A MATRIZ COM OS VALORES QUE SE QUER
+    #ESSA FUNÇÃO SÓ FUNCIONA SE FOR PASSADO 0 NO PRIMEIRO ARGUMENTO QUANDO
+    #EXECUTAMOS O PROGRAMA
         for i in range(linEcol):
             for j in range(linEcol+1):
                 print("ELEMENTO LINHA ",i," E COLUNA ",j)
                 Matriz[i][j] = int(input("-->"))
 
     def Pivo(self, Matriz, linEcol):
+        #DEFINE UMA LISTA DE VALORES QUE SÃO OBTIDOS DIVIDINDO O ELEMENTO
+        #a11 PELO ELEMENTO. EX:. a21 --> a21/a11
         A = []
         k = 0
         for i in range (linEcol):
+            #INICIA-SE POR 1 PARA QUE A PRIMEIRA LINHA NÃO SEJA CONSIDERADA,
+            #UMA VEZ QUE O VALOR ANCORA ESTÁ NA PRIMEIRA LINHA.
+            #SOMA-SE COM k PARA QUE SEJA IGNORADA A OPERAÇÃO JÁ EXECUTADA, FOR-
+            #MANDO ASSIM UMA "ESCADINHA"
             for j in range (1+k,linEcol):
                 if Matriz[i][i] != 0:
                     print(CorDaLetra.azul,"PRIMEIRO - ",Matriz[i][i]," SEGUNDO - ",Matriz[j][i],"\t---",Matriz[i][j]/Matriz[i][i],CorDaLetra.original)
@@ -69,6 +85,7 @@ class Matriz(object):
 
 
     def Gauss(self, Matriz, linEcol, pivo):
+    #EXECUTA O MÉTODO
         k = 0
         q = 0
         for c in range (1,linEcol):
@@ -77,6 +94,7 @@ class Matriz(object):
 
             for i in range (c,linEcol):
                 for j in range (k,linEcol+1):
+                    print ("VALOR DE J :: ",j)
                     Matriz[i][j] = Matriz[i][j] - ( pivo[q]*Matriz[c-1][j] )
                 q = q+1
             pivo = M.Pivo(M.matriz, M.linEcol)
